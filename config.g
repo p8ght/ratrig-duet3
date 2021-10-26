@@ -14,11 +14,13 @@ M669 K1                                                         ; select CoreXY 
 M569 P0.0 S1                                                    ; physical drive 0.0 goes forwards
 M569 P0.1 S1                                                    ; physical drive 0.1 goes forwards
 M569 P0.2 S1                                                    ; physical drive 0.2 goes forwards
+M569 P0.3 S1                                                    ; physical drive 0.3 goes forwards
+M569 P0.4 S1                                                    ; physical drive 0.4 goes forwards
 M569 P121.0 S1                                                  ; physical drive 121.0 goes forwards
 M569 P122.0 S1                                                  ; physical drive 122.0 goes forwards
 M569 P123.0 S1                                                  ; physical drive 123.0 goes forwards
 M569 P124.0 S1                                                  ; physical drive 124.0 goes forwards
-M584 X0.0 Y0.1 Z0.2 E121.0:122.0:123.0:124.0                    ; set drive mapping
+M584 X0.0 Y0.1 Z0.2:0.3:0.4 E121.0:122.0:123.0:124.0                    ; set drive mapping
 M350 X16 Y16 Z16 E16:16:16:16 I1                                ; configure microstepping with interpolation
 M92 X80.00 Y80.00 Z400.00 E655.00:655.00:655.00:655.00          ; set steps per mm
 M566 X900.00 Y900.00 Z60.00 E120.00:120.00:120.00:120.00        ; set maximum instantaneous speed changes (mm/min)
@@ -101,4 +103,3 @@ G10 P3 R0 S0                                                    ; set initial to
 ; Miscellaneous
 M501                                                            ; load saved parameters from non-volatile memory
 M911 S10 R11 P"M913 X0 Y0 G91 M83 G1 Z3 E-5 F1000"              ; set voltage thresholds and actions to run on power loss
-
