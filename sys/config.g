@@ -11,16 +11,17 @@ M550 P"Duet 3"                                                  ; set printer na
 M669 K1                                                         ; select CoreXY mode
 
 ; Drives
-M569 P0.0 S1                                                    ; physical drive 0.0 goes forwards
-M569 P0.1 S1                                                    ; physical drive 0.1 goes forwards
-M569 P0.2 S1                                                    ; physical drive 0.2 goes forwards
-M569 P0.3 S1                                                    ; physical drive 0.3 goes forwards
-M569 P0.4 S1                                                    ; physical drive 0.4 goes forwards
-M569 P121.0 S1                                                  ; physical drive 121.0 goes forwards
-M569 P122.0 S1                                                  ; physical drive 122.0 goes forwards
-M569 P123.0 S1                                                  ; physical drive 123.0 goes forwards
-M569 P124.0 S1                                                  ; physical drive 124.0 goes forwards
-M584 X0.0 Y0.1 Z0.2:0.3:0.4 E121.0:122.0:123.0:124.0                    ; set drive mapping
+M569 P0.0 S1                                                    ; X stepper 0.0 goes forwards
+M569 P0.1 S1                                                    ; Y stepper 0.1 goes forwards
+M569 P0.2 S1                                                    ; Z1 stepper 0.2 goes forwards
+M569 P0.3 S1                                                    ; Z2 stepper 0.3 goes forwards
+M569 P0.4 S1                                                    ; Z3 stepper 0.4 goes forwards
+M569 P0.5 S1                                                    ; Coupler-Stepper 0.5 goes forwards
+M569 P121.0 S1                                                  ; T1 E stepper 121.0 goes forwards
+M569 P122.0 S1                                                  ; T2 E stepper 122.0 goes forwards
+M569 P123.0 S1                                                  ; T3 E stepper 123.0 goes forwards
+M569 P124.0 S1                                                  ; T4 E stepper 124.0 goes forwards
+M584 X0.0 Y0.1 Z0.2:0.3:0.4 C0.5 E121.0:122.0:123.0:124.0       ; set drive mapping
 M350 X16 Y16 Z16 E16:16:16:16 I1                                ; configure microstepping with interpolation
 M92 X80.00 Y80.00 Z400.00 E655.00:655.00:655.00:655.00          ; set steps per mm
 M566 X900.00 Y900.00 Z60.00 E120.00:120.00:120.00:120.00        ; set maximum instantaneous speed changes (mm/min)
@@ -37,6 +38,7 @@ M208 X400 Y400 Z400 S0                                          ; set axis maxim
 M574 X1 S1 P"io0.in"                                            ; configure switch-type (e.g. microswitch) endstop for low end on X via pin io0.in
 M574 Y1 S1 P"io1.in"                                            ; configure switch-type (e.g. microswitch) endstop for low end on Y via pin io1.in
 M574 Z1 S2                                                      ; configure Z-probe endstop for low end on Z
+M574 C1 S3                                                      ; configure sensorless coupler-endstop + stall detection
 
 ; Z-Probe
 M950 S0 C"121.io0.out"                                          ; create servo pin 0 for BLTouch
