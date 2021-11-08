@@ -21,13 +21,13 @@ M569 P121.0 S1                                                  ; T1 E stepper 1
 M569 P122.0 S1                                                  ; T2 E stepper 122.0 goes forwards
 M569 P123.0 S1                                                  ; T3 E stepper 123.0 goes forwards
 M569 P124.0 S1                                                  ; T4 E stepper 124.0 goes forwards
-M584 X0.0 Y0.1 Z0.2:0.3:0.4 C0.5 E121.0:122.0:123.0:124.0       ; set drive mapping
-M350 X16 Y16 Z16 E16:16:16:16 I1                                ; configure microstepping with interpolation
-M92 X80.00 Y80.00 Z400.00 E655.00:655.00:655.00:655.00          ; set steps per mm
-M566 X900.00 Y900.00 Z60.00 E120.00:120.00:120.00:120.00        ; set maximum instantaneous speed changes (mm/min)
-M203 X6000.00 Y6000.00 Z180.00 E1200.00:1200.00:1200.00:1200.00 ; set maximum speeds (mm/min)
-M201 X500.00 Y500.00 Z20.00 E250.00:250.00:250.00:250.00        ; set accelerations (mm/s^2)
-M906 X800 Y800 Z800 E500:500:500:500 I30                        ; set motor currents (mA) and motor idle factor in per cent
+M584 X0.0 Y0.1 Z0.2:0.3:0.4 C0.5 E121.0:122.0:123.0:124.0               ; set drive mapping
+M350 X16 Y16 Z16 C16 E16:16:16:16 I1                                    ; configure microstepping with interpolation
+M92 X80.00 Y80.00 Z400.00 C400 E655.00:655.00:655.00:655.00              ; set steps per mm
+M566 X900.00 Y900.00 Z300.00 C300 E120.00:120.00:120.00:120.00           ; set maximum instantaneous speed changes (mm/min)
+M203 X6000.00 Y6000.00 Z180.00 C4000 E1200.00:1200.00:1200.00:1200.00   ; set maximum speeds (mm/min)
+M201 X500.00 Y500.00 Z500.00 C500 E250.00:250.00:250.00:250.00           ; set accelerations (mm/s^2)
+M906 X800 Y800 Z800 C800 E500:500:500:500 I30                           ; set motor currents (mA) and motor idle factor in percent
 M84 S30                                                         ; Set idle timeout
 
 ; Axis Limits
@@ -35,8 +35,10 @@ M208 X0 Y0 Z0 S1                                                ; set axis minim
 M208 X400 Y400 Z400 S0                                          ; set axis maxima
 
 ; Endstops
-M574 X1 S1 P"io0.in"                                            ; configure switch-type (e.g. microswitch) endstop for low end on X via pin io0.in
-M574 Y1 S1 P"io1.in"                                            ; configure switch-type (e.g. microswitch) endstop for low end on Y via pin io1.in
+; M574 X1 S1 P"io0.in"                                            ; configure switch-type (e.g. microswitch) endstop for low end on X via pin io0.in
+; M574 Y1 S1 P"io1.in"                                            ; configure switch-type (e.g. microswitch) endstop for low end on Y via pin io1.in
+M574 X1 S3                                                      ; configure low-x-endstop - sensorless
+M574 Y1 S3                                                      ; configure low-y-endstop - sensorless
 M574 Z1 S2                                                      ; configure Z-probe endstop for low end on Z
 M574 C1 S3                                                      ; configure sensorless coupler-endstop + stall detection
 
@@ -100,8 +102,11 @@ M563 P3 S"T4" D3 H4 F0                                          ; define tool 3
 G10 P3 X0 Y0 Z0                                                 ; set tool 3 axis offsets
 G10 P3 R0 S0                                                    ; set initial tool 3 active and standby temperatures to 0C
 
-; Custom settings are not defined
+
+; custom I/O definitions
+M950 P0 C"out3"                                                 ; define IO-0 on pin out3(HeatOut 3) for LED 
+
 
 ; Miscellaneous
 M501                                                            ; load saved parameters from non-volatile memory
-M911 S10 R11 P"M913 X0 Y0 G91 M83 G1 Z3 E-5 F1000"              ; set voltage thresholds and actions to run on power loss
+M911 S10 R11 P"M913 X0 Y0 C0 G91 M83 G1 Z3 E-5 F1000"              ; set voltage thresholds and actions to run on power loss
